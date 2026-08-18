@@ -1,0 +1,27 @@
+{
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 1200,
+      "h": 4980,
+      "title": "Registration page",
+      "expand": "fill",
+      "print": "flow"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "placeholders",
+      "x": -400,
+      "y": 0,
+      "w": 320,
+      "text": "Everything in [BRACKETS] is waiting on a real detail:\n• weekend dates, walk number, retreat centre\n• cost, registration deadline, places left\n• the Emmaus community's name and registrar\n• phone numbers, emails, packing-list link\n\nRev. Deborah Hawboldt is on here as the Strawbridge contact because adult ministry is the natural home for this — swap her if that's wrong.\n\nThe FAQ answer about phones and watches is written the way most Emmaus communities run it. Confirm it against yours before this goes live."
+    }
+  ],
+  "launch": {
+    "view": "focused",
+    "file": "Main.dc.html"
+  }
+}

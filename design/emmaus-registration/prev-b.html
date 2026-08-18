@@ -1,0 +1,147 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css"></head><body>
+<div class="shell"><section class="band-white"><div class="wrap">
+    <div class="formwrap">
+      <div class="formhead">
+        <h3>Step 1 of 4</h3>
+        <div class="steps">
+          <button class="chip active" type="button">1. About you</button>
+          <button class="chip" type="button">2. Church &amp; sponsor</button>
+          <button class="chip" type="button">3. Health &amp; logistics</button>
+          <button class="chip" type="button">4. Review</button>
+        </div>
+      </div>
+      <div class="formbody">
+        <h3>Which weekend</h3>
+        <p class="stepintro">Men's and women's Walks are held on different dates.</p>
+        <div class="picks">
+          <button type="button" class="pick on">
+            <span class="dot"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+            <span class="t">Men's Walk</span>
+            <span class="d">[THU DATE &ndash; SUN DATE] &middot; [00] places left</span>
+          </button>
+          <button type="button" class="pick">
+            <span class="dot"></span>
+            <span class="t">Women's Walk</span>
+            <span class="d">[THU DATE &ndash; SUN DATE] &middot; [00] places left</span>
+          </button>
+        </div>
+
+        <h3 style="margin-top:30px">About you</h3>
+        <p class="stepintro">Your name goes on a name tag and on a table place card, so write it the way you want to be called.</p>
+        <div class="grid2">
+          <div class="field span2">
+            <label class="lab">Full name<span class="req">*</span></label>
+            <input class="inp" type="text" value="Michael Ellis Reyna">
+          </div>
+          <div class="field">
+            <label class="lab">What you actually go by</label>
+            <input class="inp" type="text" value="Mike" placeholder="Mike">
+          </div>
+          <div class="field">
+            <label class="lab">Date of birth</label>
+            <input class="inp" type="text" placeholder="MM / DD / YYYY">
+            <span class="hint">[COMMUNITY] asks pilgrims to be at least [21].</span>
+          </div>
+          <div class="field">
+            <label class="lab">Email<span class="req">*</span></label>
+            <input class="inp" type="email" value="mreyna@example.com">
+          </div>
+          <div class="field err">
+            <label class="lab">Mobile phone<span class="req">*</span></label>
+            <input class="inp" type="tel" value="">
+            <span class="errmsg">The registrar will need a number to reach you before the weekend.</span>
+          </div>
+          <div class="field span2">
+            <label class="lab">Street address</label>
+            <input class="inp" type="text" value="1418 Kings Lake Drive">
+          </div>
+          <div class="field span2">
+            <div class="grid-csz">
+              <div class="field"><label class="lab">City</label><input class="inp" type="text" value="Kingwood"></div>
+              <div class="field"><label class="lab">State</label><input class="inp" type="text" value="TX"></div>
+              <div class="field"><label class="lab">ZIP</label><input class="inp" type="text" value="77345"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="formnav">
+        <button class="btn btn-outline btn-sm" type="button" disabled>Back</button>
+        <span class="note">Nothing is sent until you review it on step 4.</span>
+        <button class="btn btn-primary btn-sm" type="button">Continue</button>
+      </div>
+    </div>
+    <div class="formwrap">
+      <div class="formhead">
+        <h3>Step 2 of 4</h3>
+        <div class="steps">
+          <button class="chip done" type="button"><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2F7D38" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>1. About you</button>
+          <button class="chip active" type="button">2. Church &amp; sponsor</button>
+          <button class="chip" type="button">3. Health &amp; logistics</button>
+          <button class="chip" type="button">4. Review</button>
+        </div>
+      </div>
+      <div class="formbody">
+        <h3>Where you worship</h3>
+        <p class="stepintro">Pilgrims come from congregations all over [AREA]. You do not have to be United Methodist, and you do not have to be sure about much.</p>
+        <div class="grid2">
+          <div class="field">
+            <label class="lab">Church you attend<span class="req">*</span></label>
+            <input class="inp" type="text" value="Strawbridge United Methodist Church">
+          </div>
+          <div class="field">
+            <label class="lab">City</label>
+            <input class="inp" type="text" value="Kingwood">
+          </div>
+          <div class="field">
+            <label class="lab">Your pastor's name</label>
+            <input class="inp" type="text" value="Rev. Dr. Todd Jordan">
+          </div>
+          <div class="field">
+            <label class="lab">How long you have been there</label>
+            <select class="inp">
+              <option>More than five years</option>
+              <option>One to five years</option>
+              <option>Less than a year</option>
+              <option>I am not attending anywhere right now</option>
+            </select>
+          </div>
+        </div>
+
+        <h3 style="margin-top:30px">Your sponsor</h3>
+        <p class="stepintro">The person who invited you and will be praying for you all weekend. They also need to know you registered.</p>
+        <div class="grid2">
+          <div class="field">
+            <label class="lab">Sponsor's name<span class="req">*</span></label>
+            <input class="inp" type="text" value="Dana Whitfield">
+          </div>
+          <div class="field">
+            <label class="lab">Sponsor's phone<span class="req">*</span></label>
+            <input class="inp" type="tel" value="[000] 000-0000">
+          </div>
+          <div class="field">
+            <label class="lab">Sponsor's email</label>
+            <input class="inp" type="email" value="dana.whitfield@example.com">
+          </div>
+          <div class="field">
+            <label class="lab">Has your sponsor made a Walk?</label>
+            <select class="inp">
+              <option>Yes</option>
+              <option>No</option>
+              <option>I am not sure</option>
+            </select>
+          </div>
+          <div class="field span2">
+            <label class="check on"><span class="box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>I do not have a sponsor yet &mdash; please connect me with one.</span></label>
+          </div>
+        </div>
+      </div>
+      <div class="formnav">
+        <button class="btn btn-outline btn-sm" type="button">Back</button>
+        <span class="note">Nothing is sent until you review it on step 4.</span>
+        <button class="btn btn-primary btn-sm" type="button">Continue</button>
+      </div>
+    </div>
+</div></section></div>
+</body></html>

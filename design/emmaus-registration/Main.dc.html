@@ -1,0 +1,957 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@300;400;500;600;700&display=swap">
+  <style>
+/* Strawbridge UMC — Walk to Emmaus registration page
+   Palette per strawbridge-umc-brand-design §3 (green leads, yellow rules). */
+:root{
+  --green:#4DB554;        /* fills/borders with nothing on top — never text */
+  --green-deep:#2F7D38;   /* headings, accent text, filled bands w/ white text */
+  --gold:#F4B428;         /* rules, borders, card edges */
+  --gold-deep:#CE9A00;    /* small decorative accents */
+  --charcoal:#3A3B3D;
+  --cream:#FEF7E9;
+  --offwhite:#FAF9F5;
+  --bg:#F2F2F2;
+  --text:#353535;
+  --muted:#7D818A;
+  --link:#1E73BE;
+  --line:rgba(0,0,0,.1);
+  --field:#D5D5D2;
+  --error:#A3302A;        /* utility only — not a brand colour */
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:"Hind Madurai",Helvetica,Arial,sans-serif;font-size:18px;line-height:1.6;
+  overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
+img{max-width:100%}
+a{color:var(--link);text-decoration:none}
+a:hover{color:#155A96;text-decoration:underline}
+
+.shell{width:100%}
+.wrap{max-width:1080px;margin:0 auto;padding:0 32px}
+
+/* ---------- utility bar + header ---------- */
+.util{background:var(--charcoal);color:#E8E8E6;font-size:14px;letter-spacing:.03em}
+.util .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;
+  min-height:44px;padding-top:8px;padding-bottom:8px}
+.util a{color:#E8E8E6}
+.util a:hover{color:#fff}
+
+header.sumc{background:var(--bg);border-bottom:4px solid var(--gold)}
+header.sumc .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;
+  padding-top:20px;padding-bottom:16px}
+header.sumc img.logo{height:128px;width:auto;flex-shrink:0}
+.mark{text-align:right}
+.mark .name{font-size:15px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--green-deep);line-height:1.3}
+.mark .sub{font-size:14px;color:var(--muted);line-height:1.4;margin-top:2px}
+
+/* ---------- type ---------- */
+h1{font-size:44px;line-height:1.12;font-weight:600;text-transform:uppercase;
+  color:var(--green-deep);margin:0 0 14px;letter-spacing:.005em}
+h2{font-size:30px;line-height:1.25;font-weight:300;text-transform:uppercase;
+  color:var(--green-deep);margin:0 0 14px}
+h3{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--green-deep);margin:0 0 8px}
+.lede{font-size:21px;line-height:1.5;color:var(--text)}
+.meta{font-size:15px;color:var(--muted)}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold-deep);margin:0 0 12px}
+p{margin:0 0 16px}
+.tight{margin-bottom:0}
+
+/* ---------- sections ---------- */
+section{padding:56px 0}
+.band-cream{background:var(--cream)}
+.band-white{background:#fff}
+.rule{height:4px;background:var(--gold);border:0;margin:0}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:1.5fr 1fr;gap:44px;align-items:start}
+.glance{background:#fff;border:1px solid var(--line);border-top:4px solid var(--gold);
+  border-radius:5px;padding:26px 28px}
+.glance dl{margin:0}
+.glance .row{display:flex;justify-content:space-between;gap:16px;
+  padding:12px 0;border-bottom:1px solid var(--line)}
+.glance .row:last-of-type{border-bottom:0}
+.glance dt{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);padding-top:3px}
+.glance dd{margin:0;text-align:right;font-weight:600;font-size:17px;line-height:1.35}
+.glance dd small{display:block;font-weight:400;font-size:14px;color:var(--muted)}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-block;font:inherit;font-size:14px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;border-radius:5px;padding:15px 28px;cursor:pointer;
+  text-align:center;transition:background .15s,color .15s,border-color .15s}
+.btn-primary{background:var(--green-deep);color:#fff;border:1.7px solid var(--green-deep)}
+.btn-primary:hover{background:#256630;border-color:#256630;color:#fff;text-decoration:none}
+.btn-outline{background:transparent;color:var(--green-deep);border:1.7px solid var(--green-deep)}
+.btn-outline:hover{background:var(--green-deep);color:#fff;text-decoration:none}
+.btn-outline[disabled]{color:var(--muted);border-color:var(--field);cursor:default}
+.btn-sm{padding:11px 22px;font-size:13px}
+.btn-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:26px}
+
+/* ---------- detail strip ---------- */
+.strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.strip .item{background:#fff;border:1px solid var(--line);border-top:4px solid var(--gold);
+  border-radius:5px;padding:20px 22px}
+.strip .item .v{font-size:19px;font-weight:600;line-height:1.3;margin-top:6px}
+.strip .item .n{font-size:14px;color:var(--muted);margin-top:4px}
+
+/* ---------- two-column prose ---------- */
+.split{display:grid;grid-template-columns:1.25fr 1fr;gap:48px;align-items:start}
+.rhythm{background:var(--offwhite);border:1px solid var(--line);border-radius:5px;padding:26px 28px}
+.rhythm ol{list-style:none;margin:0;padding:0}
+.rhythm li{padding:14px 0 14px 0;border-bottom:1px solid var(--line)}
+.rhythm li:last-child{border-bottom:0;padding-bottom:0}
+.rhythm .when{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--green-deep);display:block;margin-bottom:2px}
+.rhythm .what{font-size:16px;line-height:1.5}
+blockquote{margin:20px 0 0;padding:8px 0 8px 18px;border-left:4px solid var(--gold);font-style:italic}
+blockquote .attr{display:block;font-style:normal;font-size:14px;color:var(--muted);margin-top:6px}
+
+/* ---------- three cards ---------- */
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.card{background:#fff;border:1px solid var(--line);border-radius:5px;padding:26px 28px}
+.card .num{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;
+  border-radius:50%;background:var(--green-deep);color:#fff;font-size:15px;font-weight:700;
+  margin-bottom:14px}
+.card p{font-size:17px;margin-bottom:0}
+
+/* ---------- form ---------- */
+.formwrap{background:#fff;border:1px solid var(--line);border-radius:5px;overflow:hidden}
+.formhead{padding:28px 36px 0}
+.steps{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:18px 0 0;padding:0 0 24px;
+  border-bottom:1px solid var(--line)}
+.chip{font:inherit;font-size:13px;font-weight:600;letter-spacing:.03em;color:var(--green-deep);
+  background:transparent;border:1.5px solid var(--gold);border-radius:20px;padding:8px 16px;
+  cursor:pointer;min-height:40px;display:inline-flex;align-items:center;gap:7px}
+.chip:hover{border-color:var(--gold-deep)}
+.chip.active{background:var(--green-deep);color:#fff;border-color:var(--green-deep)}
+.chip.done{border-color:var(--green-deep)}
+.chip .tick{flex:0 0 auto;line-height:0}
+.chip .tick svg{display:block;width:12px;height:12px}
+.formbody{padding:30px 36px 34px}
+.formbody > h3:first-child{margin-top:0}
+.stepintro{font-size:16px;color:var(--muted);margin:-2px 0 22px}
+
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 22px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 22px}
+.grid-csz{display:grid;grid-template-columns:2fr 1fr 1fr;gap:18px 22px}
+.span2{grid-column:1 / -1}
+.field{display:flex;flex-direction:column;gap:6px}
+label.lab{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted)}
+label.lab .req{color:var(--gold-deep);margin-left:3px}
+input.inp,select.inp,textarea.inp{font:inherit;font-size:17px;color:var(--text);background:#fff;
+  border:1px solid var(--field);border-radius:4px;padding:12px 14px;width:100%;min-height:46px}
+input.inp:focus,select.inp:focus,textarea.inp:focus{outline:none;border-color:var(--green-deep);
+  box-shadow:0 0 0 3px rgba(47,125,56,.13)}
+textarea.inp{min-height:92px;resize:vertical;line-height:1.5}
+.hint{font-size:14px;color:var(--muted);line-height:1.45}
+.err input.inp,.err select.inp{border-color:var(--error);background:#FEF7F6}
+.errmsg{font-size:14px;color:var(--error);font-weight:600}
+
+/* selectable weekend cards */
+.picks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-bottom:6px}
+.pick{position:relative;text-align:left;font:inherit;background:#fff;cursor:pointer;
+  border:1.7px solid var(--field);border-radius:5px;padding:20px 56px 20px 22px;display:block;width:100%}
+.pick:hover{border-color:var(--gold)}
+.pick.on{border-color:var(--green-deep);background:var(--cream)}
+.pick .t{display:block;font-size:19px;font-weight:600;color:var(--text);line-height:1.3}
+.pick .d{display:block;font-size:15px;color:var(--muted);margin-top:4px;line-height:1.45}
+.pick .dot{position:absolute;top:19px;right:19px;width:22px;height:22px;border-radius:50%;
+  border:1.7px solid var(--field);display:flex;align-items:center;justify-content:center}
+.pick.on .dot{border-color:var(--green-deep);background:var(--green-deep)}
+
+/* toggle chips (dietary) */
+.toggles{display:flex;flex-wrap:wrap;gap:10px}
+.tog{font:inherit;font-size:15px;font-weight:600;color:var(--green-deep);background:transparent;
+  border:1.5px solid var(--gold);border-radius:20px;padding:9px 18px;cursor:pointer;min-height:44px}
+.tog:hover{border-color:var(--gold-deep)}
+.tog.on{background:var(--green-deep);color:#fff;border-color:var(--green-deep)}
+
+/* checkbox row */
+.check{display:flex;gap:12px;align-items:flex-start;font-size:16px;line-height:1.5;cursor:pointer}
+.check .box{flex:0 0 auto;width:22px;height:22px;border:1.7px solid var(--field);border-radius:4px;
+  background:#fff;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.check.on .box{border-color:var(--green-deep);background:var(--green-deep)}
+
+.formnav{display:flex;justify-content:space-between;align-items:center;gap:16px;
+  border-top:1px solid var(--line);padding:22px 36px;background:var(--offwhite)}
+.formnav .note{font-size:14px;color:var(--muted)}
+
+/* review */
+.review{border:1px solid var(--line);border-radius:5px;overflow:hidden}
+.review .rrow{display:flex;justify-content:space-between;gap:20px;padding:13px 20px;
+  border-bottom:1px solid var(--line);font-size:16px}
+.review .rrow:last-child{border-bottom:0}
+.review .rrow:nth-child(odd){background:var(--offwhite)}
+.review .k{color:var(--muted);font-size:13px;font-weight:700;letter-spacing:.07em;
+  text-transform:uppercase;padding-top:3px;flex:0 0 40%}
+.review .v{text-align:right;font-weight:600}
+.review .v em{font-style:normal;font-weight:400;color:var(--muted)}
+.reviewhead{display:flex;justify-content:space-between;align-items:baseline;margin:26px 0 10px}
+.reviewhead h3{margin:0}
+.editlink{font-size:14px;font-weight:600;color:var(--green-deep);background:none;border:0;
+  cursor:pointer;font-family:inherit;padding:4px}
+.editlink:hover{text-decoration:underline}
+
+/* success */
+.success{text-align:center;padding:56px 36px 60px}
+.success .ring{width:74px;height:74px;border-radius:50%;background:var(--cream);
+  border:2px solid var(--green-deep);display:flex;align-items:center;justify-content:center;
+  margin:0 auto 22px}
+.success h2{margin-bottom:10px}
+.success p{max-width:560px;margin-left:auto;margin-right:auto}
+.nextlist{max-width:560px;margin:22px auto 0;text-align:left;
+  border-top:1px solid var(--line)}
+.nextlist .n{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);font-size:16px}
+.nextlist .n b{color:var(--green-deep);font-size:13px;letter-spacing:.08em;text-transform:uppercase;
+  flex:0 0 84px;padding-top:3px}
+
+/* ---------- FAQ ---------- */
+.faq{border-top:1px solid var(--line)}
+.faq .q{padding:22px 0;border-bottom:1px solid var(--line)}
+.faq .q .a{font-size:17px;margin:6px 0 0;color:var(--text)}
+.faq .q h3{color:var(--green-deep);font-size:19px;font-weight:600;letter-spacing:0;
+  text-transform:none;margin:0}
+
+/* ---------- contact + footer ---------- */
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;
+  background:#fff;border:1px solid var(--line);border-left:6px solid var(--gold);
+  border-radius:5px;padding:30px 34px}
+footer.sumc{background:var(--charcoal);color:#D9D9D6;font-size:15px;padding:34px 0 40px}
+footer.sumc .wrap{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap}
+footer.sumc .fname{color:#fff;font-size:16px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+footer.sumc a{color:#D9D9D6;text-decoration:underline}
+footer.sumc a:hover{color:#fff}
+footer.sumc .fine{font-size:13px;color:#B7B7B3;max-width:420px;line-height:1.5}
+
+/* ==========================================================================
+   RESPONSIVE — additive only; every rule above renders unchanged on desktop.
+   ========================================================================== */
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr;gap:32px}
+  .split{grid-template-columns:1fr;gap:32px}
+  .strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cards{grid-template-columns:1fr;gap:18px}
+  .contact{grid-template-columns:1fr;gap:22px}
+}
+@media (max-width:620px){
+  body{font-size:17px;line-height:1.55}
+  .wrap{padding:0 18px}
+  section{padding:38px 0}
+  h1{font-size:30px}
+  h2{font-size:23px}
+  .lede{font-size:18px}
+  header.sumc .wrap{padding-top:16px;padding-bottom:12px;gap:14px}
+  header.sumc img.logo{height:74px}
+  .mark .name{font-size:12px;letter-spacing:.1em}
+  .mark .sub{font-size:12px}
+  .util{font-size:13px}
+  .util .wrap{flex-direction:column;align-items:flex-start;gap:2px;padding:9px 18px}
+  .strip{grid-template-columns:1fr;gap:14px}
+  .glance{padding:20px}
+  .glance dd{font-size:16px}
+  .btn{display:block;width:100%;padding:15px 20px}
+  .btn-row{gap:12px}
+  .btn-row .meta{text-align:center;width:100%}
+  .formhead{padding:22px 18px 0}
+  .formbody{padding:24px 18px 28px}
+  .formnav{padding:18px;flex-direction:column-reverse;align-items:stretch;gap:12px}
+  .formnav .note{text-align:center}
+  .steps{gap:8px;padding-bottom:18px}
+  .chip{font-size:12px;padding:8px 13px}
+  .grid2,.grid3,.grid-csz,.picks{grid-template-columns:1fr}
+  .review .rrow{flex-direction:column;gap:2px;padding:12px 16px}
+  .review .k{flex:none}
+  .review .v{text-align:left}
+  .success{padding:40px 18px 44px}
+  .nextlist .n{flex-direction:column;gap:2px}
+  .nextlist .n b{flex:none}
+  .contact{padding:22px}
+  footer.sumc .wrap{flex-direction:column;gap:20px}
+}
+
+  </style>
+</helmet>
+
+<div class="shell">
+
+<div class="util"><div class="wrap">
+  <span>Strawbridge United Methodist Church &middot; Kingwood, Texas</span>
+  <span>Questions about the weekend? <a href="tel:">[REGISTRAR PHONE]</a></span>
+</div></div>
+
+<header class="sumc"><div class="wrap">
+  <img class="logo" src="./sumc-logo.png" alt="Strawbridge United Methodist Church">
+  <div class="mark">
+    <div class="name">The Walk to Emmaus</div>
+    <div class="sub">A ministry of The Upper Room</div>
+  </div>
+</div></header>
+
+<section class="band-cream">
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <p class="eyebrow">[EMMAUS COMMUNITY NAME] &middot; Walk #[00]</p>
+        <h1>Three days on the road to Emmaus</h1>
+        <p class="lede">Seventy-two hours away from the noise, in the company of people who will still be walking with you long after you come home.</p>
+        <p>The Walk to Emmaus is open to anyone who is part of a Christian congregation and comes with a sponsor. Men's and women's weekends are held separately, at [RETREAT CENTER].</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="#register">Start my registration</a>
+          <a class="btn btn-outline" href="mailto:">Talk to someone first</a>
+        </div>
+        <p class="meta" style="margin-top:18px">Registration closes [DATE] &middot; [00] places left on each weekend</p>
+      </div>
+      <div class="glance">
+        <h3>At a glance</h3>
+        <dl>
+          <div class="row"><dt>Men's Walk</dt><dd>[THU DATE &ndash; SUN DATE]</dd></div>
+          <div class="row"><dt>Women's Walk</dt><dd>[THU DATE &ndash; SUN DATE]</dd></div>
+          <div class="row"><dt>Where</dt><dd>[RETREAT CENTER]<small>[CITY, TX]</small></dd></div>
+          <div class="row"><dt>Cost</dt><dd>[$000]<small>Lodging and all meals included</small></dd></div>
+          <div class="row"><dt>Register by</dt><dd>[DATE]</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="strip">
+      <div class="item"><h3>Seventy-two hours</h3><div class="v">Thursday evening to Sunday evening</div><div class="n">One unbroken weekend</div></div>
+      <div class="item"><h3>Fifteen talks</h3><div class="v">Given by lay people and clergy</div><div class="n">Nothing is asked of you but listening</div></div>
+      <div class="item"><h3>One table</h3><div class="v">The same small group all weekend</div><div class="n">Strangers on Thursday, not by Sunday</div></div>
+      <div class="item"><h3>Holy Communion</h3><div class="v">Shared every day</div><div class="n">The table is open to all who love Christ</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="band-white">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <h2>What the weekend actually is</h2>
+        <p>The Walk to Emmaus is a three-day experience of Christian spiritual renewal, a ministry of The Upper Room. It takes its name from Luke 24, where two travelers walk a long road with a stranger and only recognize Jesus afterward, at the table, in the breaking of the bread.</p>
+        <p>You come as a pilgrim. You are not asked to teach, perform, or have your faith worked out in advance. You listen, you eat, you worship, and you sit with the same handful of people at the same table from Thursday to Sunday. Holy Communion is shared each day at a table open to all who love Christ.</p>
+        <p class="tight">The weekend ends Sunday evening, and then the part that lasts begins. Emmaus calls it the Fourth Day &mdash; the rest of your life, walked with a small reunion group and a community that keeps showing up.</p>
+        <blockquote>Were not our hearts burning within us while he was talking to us on the road?<span class="attr">Luke 24:32</span></blockquote>
+      </div>
+      <div class="rhythm">
+        <h3>The rhythm of the weekend</h3>
+        <ol>
+          <li><span class="when">Thursday evening</span><span class="what">Arrive, share supper, meet the people at your table. The evening ends in worship and a quiet night.</span></li>
+          <li><span class="when">Friday</span><span class="what">Talks, table conversation, worship, Communion. The day is full, and the pace is not yours to manage &mdash; that is part of the gift.</span></li>
+          <li><span class="when">Saturday</span><span class="what">More talks and more conversation, and in the evening, the candlelight service.</span></li>
+          <li><span class="when">Sunday</span><span class="what">Closing worship and sending, finishing [SUNDAY EVENING]. [COMMUNITY] posts the full schedule at [LINK].</span></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Three things to know before you fill this out</h2>
+    <div class="cards">
+      <div class="card">
+        <span class="num">1</span>
+        <h3>You need a sponsor</h3>
+        <p>Every pilgrim comes sponsored by someone who has already made a Walk. Your sponsor gets you there, prays for you through the weekend, and quietly looks after whatever you left at home. No sponsor yet? Say so on the form and [COMMUNITY] will connect you with one.</p>
+      </div>
+      <div class="card">
+        <span class="num">2</span>
+        <h3>The weekends are separate</h3>
+        <p>Men and women attend on different dates. Couples often go on back-to-back weekends &mdash; note it on the form and the registrar will help you sort out which one comes first and who is home with the kids.</p>
+      </div>
+      <div class="card">
+        <span class="num">3</span>
+        <h3>Cost should not decide this</h3>
+        <p>[$000] covers lodging, every meal, and materials for the three days. Scholarships are available and handled confidentially, and no one is turned away over money. There is a box for this on the form; checking it is not a small thing to ask.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-white" id="register">
+  <div class="wrap">
+    <h2>Pilgrim registration</h2>
+    <p class="lede" style="margin-bottom:28px;max-width:720px">About five minutes. Your registrar reads every one of these by hand, so write like you are telling a person, not a database.</p>
+    <div class="formwrap">
+      <div class="formhead">
+        <div class="steps">
+          <button class="{{ c1 }}" type="button" onClick="{{ go1 }}"><sc-if value="{{ d1 }}" hint-placeholder-val="{{ false }}"><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2F7D38" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>1. About you</button>
+          <button class="{{ c2 }}" type="button" onClick="{{ go2 }}"><sc-if value="{{ d2 }}" hint-placeholder-val="{{ false }}"><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2F7D38" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>2. Church &amp; sponsor</button>
+          <button class="{{ c3 }}" type="button" onClick="{{ go3 }}"><sc-if value="{{ d3 }}" hint-placeholder-val="{{ false }}"><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2F7D38" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>3. Health &amp; logistics</button>
+          <button class="{{ c4 }}" type="button" onClick="{{ go4 }}">4. Review</button>
+        </div>
+      </div>
+
+      <sc-if value="{{ is1 }}" hint-placeholder-val="{{ true }}">
+      <div class="formbody">
+        <h3>Which weekend</h3>
+        <p class="stepintro">Men's and women's Walks are held on different dates.</p>
+        <div class="picks">
+          <button type="button" class="{{ menCls }}" onClick="{{ pickMen }}">
+            <span class="dot"><sc-if value="{{ menOn }}" hint-placeholder-val="{{ true }}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if></span>
+            <span class="t">Men's Walk</span>
+            <span class="d">[THU DATE &ndash; SUN DATE] &middot; [00] places left</span>
+          </button>
+          <button type="button" class="{{ womenCls }}" onClick="{{ pickWomen }}">
+            <span class="dot"><sc-if value="{{ womenOn }}" hint-placeholder-val="{{ false }}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if></span>
+            <span class="t">Women's Walk</span>
+            <span class="d">[THU DATE &ndash; SUN DATE] &middot; [00] places left</span>
+          </button>
+        </div>
+
+        <h3 style="margin-top:30px">About you</h3>
+        <p class="stepintro">Your name goes on a name tag and on a table place card, so write it the way you want to be called.</p>
+        <div class="grid2">
+          <div class="{{ nameCls }}">
+            <label class="lab">Full name<span class="req">*</span></label>
+            <input class="inp" type="text" value="{{ f.name }}" onChange="{{ setName }}">
+            <sc-if value="{{ nameBad }}" hint-placeholder-val="{{ false }}"><span class="errmsg">Your registrar needs a name for your name tag.</span></sc-if>
+          </div>
+          <div class="field">
+            <label class="lab">What you actually go by</label>
+            <input class="inp" type="text" value="{{ f.goesby }}" onChange="{{ setGoesby }}">
+          </div>
+          <div class="field">
+            <label class="lab">Date of birth</label>
+            <input class="inp" type="text" placeholder="MM / DD / YYYY" value="{{ f.dob }}" onChange="{{ setDob }}">
+            <span class="hint">[COMMUNITY] asks pilgrims to be at least [21].</span>
+          </div>
+          <div class="{{ emailCls }}">
+            <label class="lab">Email<span class="req">*</span></label>
+            <input class="inp" type="email" value="{{ f.email }}" onChange="{{ setEmail }}">
+            <sc-if value="{{ emailBad }}" hint-placeholder-val="{{ false }}"><span class="errmsg">Your confirmation and packing list go here.</span></sc-if>
+          </div>
+          <div class="{{ phoneCls }}">
+            <label class="lab">Mobile phone<span class="req">*</span></label>
+            <input class="inp" type="tel" value="{{ f.phone }}" onChange="{{ setPhone }}">
+            <sc-if value="{{ phoneBad }}" hint-placeholder-val="{{ false }}"><span class="errmsg">The registrar will need a number to reach you before the weekend.</span></sc-if>
+          </div>
+          <div class="field span2">
+            <label class="lab">Street address</label>
+            <input class="inp" type="text" value="{{ f.street }}" onChange="{{ setStreet }}">
+          </div>
+          <div class="field span2">
+            <div class="grid-csz">
+              <div class="field"><label class="lab">City</label><input class="inp" type="text" value="{{ f.city }}" onChange="{{ setCity }}"></div>
+              <div class="field"><label class="lab">State</label><input class="inp" type="text" value="{{ f.state }}" onChange="{{ setState }}"></div>
+              <div class="field"><label class="lab">ZIP</label><input class="inp" type="text" value="{{ f.zip }}" onChange="{{ setZip }}"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="formnav">
+        <button class="btn btn-outline btn-sm" type="button" disabled>Back</button>
+        <span class="note">Nothing is sent until you review it on step 4.</span>
+        <button class="btn btn-primary btn-sm" type="button" onClick="{{ next }}">Continue</button>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ is2 }}" hint-placeholder-val="{{ false }}">
+      <div class="formbody">
+        <h3>Where you worship</h3>
+        <p class="stepintro">Pilgrims come from congregations all over [AREA]. You do not have to be United Methodist, and you do not have to be sure about much.</p>
+        <div class="grid2">
+          <div class="field">
+            <label class="lab">Church you attend<span class="req">*</span></label>
+            <input class="inp" type="text" value="{{ f.church }}" onChange="{{ setChurch }}">
+          </div>
+          <div class="field">
+            <label class="lab">City</label>
+            <input class="inp" type="text" value="{{ f.churchcity }}" onChange="{{ setChurchcity }}">
+          </div>
+          <div class="field">
+            <label class="lab">Your pastor's name</label>
+            <input class="inp" type="text" value="{{ f.pastor }}" onChange="{{ setPastor }}">
+          </div>
+          <div class="field">
+            <label class="lab">How long you have been there</label>
+            <select class="inp" value="{{ f.tenure }}" onChange="{{ setTenure }}">
+              <option>More than five years</option>
+              <option>One to five years</option>
+              <option>Less than a year</option>
+              <option>I am not attending anywhere right now</option>
+            </select>
+          </div>
+        </div>
+
+        <h3 style="margin-top:30px">Your sponsor</h3>
+        <p class="stepintro">The person who invited you and will be praying for you all weekend. They also need to know you registered.</p>
+        <div class="grid2">
+          <div class="field">
+            <label class="lab">Sponsor's name<span class="req">*</span></label>
+            <input class="inp" type="text" value="{{ f.sponsor }}" onChange="{{ setSponsor }}">
+          </div>
+          <div class="field">
+            <label class="lab">Sponsor's phone<span class="req">*</span></label>
+            <input class="inp" type="tel" value="{{ f.sponsorphone }}" onChange="{{ setSponsorphone }}">
+          </div>
+          <div class="field">
+            <label class="lab">Sponsor's email</label>
+            <input class="inp" type="email" value="{{ f.sponsoremail }}" onChange="{{ setSponsoremail }}">
+          </div>
+          <div class="field">
+            <label class="lab">Has your sponsor made a Walk?</label>
+            <select class="inp" value="{{ f.sponsorwalk }}" onChange="{{ setSponsorwalk }}">
+              <option>Yes</option>
+              <option>No</option>
+              <option>I am not sure</option>
+            </select>
+          </div>
+          <div class="field span2">
+            <label class="{{ sponsorNeedCls }}" onClick="{{ toggleSponsorNeed }}"><span class="box"><sc-if value="{{ needSponsor }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if></span><span>I do not have a sponsor yet &mdash; please connect me with one.</span></label>
+          </div>
+        </div>
+      </div>
+      <div class="formnav">
+        <button class="btn btn-outline btn-sm" type="button" onClick="{{ back }}">Back</button>
+        <span class="note">Nothing is sent until you review it on step 4.</span>
+        <button class="btn btn-primary btn-sm" type="button" onClick="{{ next }}">Continue</button>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ is3 }}" hint-placeholder-val="{{ false }}">
+      <div class="formbody">
+        <h3>At the table</h3>
+        <p class="stepintro">Every meal is cooked for the whole group. Tell the kitchen what they need to know.</p>
+        <div class="toggles">
+          <button type="button" class="{{ dVegCls }}" onClick="{{ dVeg }}">Vegetarian</button>
+          <button type="button" class="{{ dVeganCls }}" onClick="{{ dVegan }}">Vegan</button>
+          <button type="button" class="{{ dGlutenCls }}" onClick="{{ dGluten }}">Gluten free</button>
+          <button type="button" class="{{ dDairyCls }}" onClick="{{ dDairy }}">Dairy free</button>
+          <button type="button" class="{{ dNutCls }}" onClick="{{ dNut }}">Nut allergy</button>
+          <button type="button" class="{{ dOtherCls }}" onClick="{{ dOther }}">Something else</button>
+        </div>
+        <div class="field" style="margin-top:18px">
+          <label class="lab">Anything the kitchen should know in more detail</label>
+          <textarea class="inp" rows="2" value="{{ f.dietnote }}" onChange="{{ setDietnote }}"></textarea>
+        </div>
+
+        <h3 style="margin-top:30px">Health</h3>
+        <p class="stepintro">A nurse is on site the whole weekend. This stays with the registrar and the medical team.</p>
+        <div class="grid2">
+          <div class="field span2">
+            <label class="lab">Conditions, medications, or anything we should watch for</label>
+            <textarea class="inp" rows="3" placeholder="Include anything you take daily, and anything that would matter in an emergency." value="{{ f.health }}" onChange="{{ setHealth }}"></textarea>
+          </div>
+          <div class="field">
+            <label class="lab">Sleeping and getting around</label>
+            <select class="inp" value="{{ f.sleeping }}" onChange="{{ setSleeping }}">
+              <option>No special needs</option>
+              <option>Lower bunk, please</option>
+              <option>Ground floor &mdash; stairs are difficult</option>
+              <option>I use a mobility device</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="lab">Equipment</label>
+            <label class="{{ cpapCls }}" style="min-height:46px;align-items:center" onClick="{{ toggleCpap }}"><span class="box"><sc-if value="{{ cpap }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if></span><span>I use a CPAP and will need an outlet</span></label>
+          </div>
+        </div>
+
+        <h3 style="margin-top:30px">If we need to reach someone</h3>
+        <div class="grid3">
+          <div class="field">
+            <label class="lab">Emergency contact<span class="req">*</span></label>
+            <input class="inp" type="text" value="{{ f.econtact }}" onChange="{{ setEcontact }}">
+          </div>
+          <div class="field">
+            <label class="lab">Relationship</label>
+            <input class="inp" type="text" value="{{ f.erel }}" onChange="{{ setErel }}">
+          </div>
+          <div class="field">
+            <label class="lab">Phone<span class="req">*</span></label>
+            <input class="inp" type="tel" value="{{ f.ephone }}" onChange="{{ setEphone }}">
+          </div>
+        </div>
+
+        <div style="margin-top:26px;background:#FEF7E9;border-left:6px solid #F4B428;border-radius:5px;padding:20px 22px">
+          <label class="{{ scholarCls }}" onClick="{{ toggleScholar }}"><span class="box"><sc-if value="{{ scholarship }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if></span><span><b>I would like to talk about a scholarship.</b><br><span class="hint">Someone will call you, and it will not be awkward. Cost has never been the point of this weekend.</span></span></label>
+        </div>
+      </div>
+      <div class="formnav">
+        <button class="btn btn-outline btn-sm" type="button" onClick="{{ back }}">Back</button>
+        <span class="note">Nothing is sent until you review it on step 4.</span>
+        <button class="btn btn-primary btn-sm" type="button" onClick="{{ next }}">Continue</button>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ is4 }}" hint-placeholder-val="{{ false }}">
+      <div class="formbody">
+        <h3>Read it back</h3>
+        <p class="stepintro">Fix anything that is wrong. Nothing has been sent yet.</p>
+
+        <div class="reviewhead" style="margin-top:0"><h3>About you</h3><button class="editlink" type="button" onClick="{{ go1 }}">Edit</button></div>
+        <div class="review">
+          <div class="rrow"><span class="k">Weekend</span><span class="v">{{ rWeekend }}</span></div>
+          <div class="rrow"><span class="k">Name</span><span class="v">{{ rName }} <em>{{ rNameAlt }}</em></span></div>
+          <div class="rrow"><span class="k">Email</span><span class="v">{{ rEmail }}</span></div>
+          <div class="rrow"><span class="k">Phone</span><span class="v">{{ rPhone }}</span></div>
+          <div class="rrow"><span class="k">Home</span><span class="v">{{ rHome }}</span></div>
+        </div>
+
+        <div class="reviewhead"><h3>Church &amp; sponsor</h3><button class="editlink" type="button" onClick="{{ go2 }}">Edit</button></div>
+        <div class="review">
+          <div class="rrow"><span class="k">Church</span><span class="v">{{ rChurch }}</span></div>
+          <div class="rrow"><span class="k">Pastor</span><span class="v">{{ rPastor }}</span></div>
+          <div class="rrow"><span class="k">Sponsor</span><span class="v">{{ rSponsor }} <em>{{ rSponsorAlt }}</em></span></div>
+          <div class="rrow"><span class="k">Sponsor contact</span><span class="v">{{ rSponsorContact }}</span></div>
+        </div>
+
+        <div class="reviewhead"><h3>Health &amp; logistics</h3><button class="editlink" type="button" onClick="{{ go3 }}">Edit</button></div>
+        <div class="review">
+          <div class="rrow"><span class="k">At the table</span><span class="v">{{ rDiet }} <em>{{ rDietAlt }}</em></span></div>
+          <div class="rrow"><span class="k">Health notes</span><span class="v">{{ rHealth }}<em>{{ rHealthAlt }}</em></span></div>
+          <div class="rrow"><span class="k">Sleeping</span><span class="v">{{ rSleep }}</span></div>
+          <div class="rrow"><span class="k">Emergency contact</span><span class="v">{{ rEmergName }} <em>{{ rEmergRel }}</em> {{ rEmergPhone }}</span></div>
+          <div class="rrow"><span class="k">Scholarship</span><span class="v">{{ rSchol }}<em>{{ rScholAlt }}</em></span></div>
+        </div>
+
+        <div style="margin-top:28px;background:#FAF9F5;border:1px solid rgba(0,0,0,.1);border-radius:5px;padding:22px 24px">
+          <h3 style="margin-bottom:6px">The cost</h3>
+          <p style="margin-bottom:0;font-size:17px">[$000], due by [DATE]. Nothing is charged here &mdash; [COMMUNITY] emails payment instructions once the registrar has read your form. If you asked about a scholarship, someone calls you before any of that.</p>
+        </div>
+
+        <div style="margin-top:22px">
+          <label class="{{ agreeCls }}" onClick="{{ toggleAgree }}"><span class="box"><sc-if value="{{ agree }}" hint-placeholder-val="{{ true }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if></span><span>I can be there for the whole weekend, Thursday evening through Sunday evening, and everything above is right.</span></label>
+        </div>
+      </div>
+      <div class="formnav">
+        <button class="btn btn-outline btn-sm" type="button" onClick="{{ back }}">Back</button>
+        <span class="note">Your registrar reads this by hand.</span>
+        <button class="btn btn-primary btn-sm" type="button" onClick="{{ submit }}">Send my registration</button>
+      </div>
+      </sc-if>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+    <div class="formwrap">
+      <div class="success">
+        <div class="ring"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#2F7D38" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></div>
+        <h2>You are registered</h2>
+        <p class="lede">{{ successLede }}</p>
+        <div class="nextlist">
+          <div class="n"><b>Today</b><span>{{ successToday }}</span></div>
+          <div class="n"><b>This week</b><span>The registrar reads your form and confirms your place, usually within [3] days.</span></div>
+          <div class="n"><b>Before you go</b><span>You will get a packing list, directions to [RETREAT CENTER], and a number your family can call all weekend.</span></div>
+        </div>
+        <div class="btn-row" style="justify-content:center">
+          <button class="btn btn-outline btn-sm" type="button" onClick="{{ reset }}">Register someone else</button>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Questions people actually ask</h2>
+    <div class="faq">
+      <div class="q">
+        <h3>Do I have to be United Methodist?</h3>
+        <p class="a">No. The Walk to Emmaus is a ministry of The Upper Room and grew out of the United Methodist tradition, but it is open to anyone who is part of a Christian congregation. Pilgrims come from churches all over [AREA].</p>
+      </div>
+      <div class="q">
+        <h3>Can I come late or leave early?</h3>
+        <p class="a">The weekend is built as one unbroken seventy-two hours, and pilgrims are asked to stay for all of it &mdash; that is most of what makes it work. If these dates cannot hold you for three days, register for the next one; [COMMUNITY] holds [N] weekends a year.</p>
+      </div>
+      <div class="q">
+        <h3>What do I bring?</h3>
+        <p class="a">Comfortable clothes for three days, toiletries, a Bible if you use one, and anything you take daily. A full packing list comes with your confirmation. [PACKING LIST LINK]</p>
+      </div>
+      <div class="q">
+        <h3>Do I keep my phone?</h3>
+        <p class="a">Pilgrims are asked to set phones and watches aside for the weekend, so the days are not measured out in advance. [RETREAT CENTER] has a number for emergencies, and it goes home with your family. [CONFIRM THIS IS YOUR COMMUNITY'S PRACTICE]</p>
+      </div>
+      <div class="q">
+        <h3>What happens afterward?</h3>
+        <p class="a">Your Fourth Day. Most pilgrims join a reunion group &mdash; three or four people who meet weekly for an hour &mdash; and come to community gatherings. None of it is required. The invitation just stays open.</p>
+      </div>
+    </div>
+
+    <div class="contact" style="margin-top:40px">
+      <div>
+        <h3>Still deciding?</h3>
+        <p class="tight" style="font-size:17px">Call or write. Nobody will pressure you, and asking is not a commitment.</p>
+      </div>
+      <div>
+        <p style="margin-bottom:6px"><b>Rev. Deborah Hawboldt</b><br><span class="meta">Pastor of Adult Ministry, Strawbridge UMC &middot; [EMAIL] &middot; [PHONE]</span></p>
+        <p class="tight"><b>[REGISTRAR NAME]</b><br><span class="meta">Registrar, [EMMAUS COMMUNITY] &middot; [EMAIL]</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="sumc"><div class="wrap">
+  <div>
+    <div class="fname">Strawbridge United Methodist Church</div>
+    <div>[STREET ADDRESS], Kingwood, TX [ZIP]<br>[CHURCH PHONE] &middot; <a href="https://strawbridge-umc.org">strawbridge-umc.org</a></div>
+  </div>
+  <div class="fine">The Walk to Emmaus is a ministry of The Upper Room, Discipleship Ministries of The United Methodist Church. Weekends are organized by [EMMAUS COMMUNITY]; Strawbridge sponsors pilgrims and hosts registration.</div>
+</div></footer>
+
+</div>
+
+</x-dc>
+<script data-dc-script data-props='{"view":{"editor":"enum","options":["Step 1 · About you","Step 1 · missing a required field","Step 2 · Church &amp; sponsor","Step 3 · Health &amp; logistics","Step 4 · Review","Submitted"],"default":"Step 1 · About you","section":"Prototype"},"$preview":{"width":1200,"height":4980}}'>
+class Component extends DCLogic {
+  state = {
+    step: 1,
+    submitted: false,
+    showErr: false,
+    walk: 'men',
+    diet: { veg: true, vegan: false, gluten: true, dairy: false, nut: false, other: false },
+    cpap: false,
+    scholarship: false,
+    needSponsor: false,
+    agree: true,
+    f: {
+      name: 'Michael Ellis Reyna',
+      goesby: 'Mike',
+      dob: '',
+      email: 'mreyna@example.com',
+      phone: '[000] 000-0000',
+      street: '1418 Kings Lake Drive',
+      city: 'Kingwood',
+      state: 'TX',
+      zip: '77345',
+      church: 'Strawbridge United Methodist Church',
+      churchcity: 'Kingwood',
+      pastor: 'Rev. Dr. Todd Jordan',
+      tenure: 'More than five years',
+      sponsor: 'Dana Whitfield',
+      sponsorphone: '[000] 000-0000',
+      sponsoremail: 'dana.whitfield@example.com',
+      sponsorwalk: 'Yes',
+      dietnote: 'Celiac, so cross-contamination matters more than the menu does.',
+      health: '',
+      sleeping: 'Lower bunk, please',
+      econtact: 'Angela Reyna',
+      erel: 'Wife',
+      ephone: '[000] 000-0000'
+    }
+  };
+
+  componentDidMount() { this.applyView(this.props.view); }
+
+  componentDidUpdate(prev) {
+    if (prev && prev.view !== this.props.view) this.applyView(this.props.view);
+  }
+
+  // The "Prototype view" tweak jumps the form to a state without clicking through it.
+  applyView(v) {
+    var t = String(v == null ? '' : v);
+    var s = { showErr: false, submitted: false };
+    if (t.indexOf('Submitted') === 0) { s.step = 4; s.submitted = true; }
+    else if (t.indexOf('missing') > -1) {
+      s.step = 1; s.showErr = true;
+      s.f = Object.assign({}, this.state.f, { phone: '' });
+    }
+    else if (t.indexOf('Step 2') === 0) { s.step = 2; }
+    else if (t.indexOf('Step 3') === 0) { s.step = 3; }
+    else if (t.indexOf('Step 4') === 0) { s.step = 4; }
+    else { s.step = 1; }
+    this.setState(s);
+  }
+
+  blank(k) { return !String(this.state.f[k] || '').trim(); }
+
+  setField(k) {
+    var self = this;
+    return function (e) {
+      var v = e && e.target ? e.target.value : '';
+      var f = Object.assign({}, self.state.f);
+      f[k] = v;
+      self.setState({ f: f });
+    };
+  }
+
+  goto(n) { var self = this; return function () { self.setState({ step: n, submitted: false }); }; }
+
+  next() {
+    if (this.state.step === 1 && (this.blank('name') || this.blank('email') || this.blank('phone'))) {
+      this.setState({ showErr: true });
+      return;
+    }
+    this.setState({ step: Math.min(4, this.state.step + 1), showErr: false });
+  }
+
+  back() { this.setState({ step: Math.max(1, this.state.step - 1), showErr: false }); }
+
+  flip(k) { var self = this; return function () { var s = {}; s[k] = !self.state[k]; self.setState(s); }; }
+
+  flipDiet(k) {
+    var self = this;
+    return function () {
+      var d = Object.assign({}, self.state.diet);
+      d[k] = !d[k];
+      self.setState({ diet: d });
+    };
+  }
+
+  chipCls(n) {
+    if (this.state.step === n) return 'chip active';
+    return this.state.step > n ? 'chip done' : 'chip';
+  }
+
+  dietLabel() {
+    var d = this.state.diet;
+    var out = [];
+    if (d.veg) out.push('Vegetarian');
+    if (d.vegan) out.push('vegan');
+    if (d.gluten) out.push('gluten free');
+    if (d.dairy) out.push('dairy free');
+    if (d.nut) out.push('nut allergy');
+    if (d.other) out.push('something else');
+    if (!out.length) return 'Nothing to flag';
+    return out.join(', ');
+  }
+
+  renderVals() {
+    var self = this;
+    var st = this.state;
+    var f = st.f;
+    var err = st.showErr;
+    var nameBad = err && this.blank('name');
+    var emailBad = err && this.blank('email');
+    var phoneBad = err && this.blank('phone');
+    var walkName = st.walk === 'men' ? "Men's Walk" : "Women's Walk";
+    var home = [f.street, f.city, f.state, f.zip].filter(Boolean).join(', ').replace(', ' + f.zip, ' ' + f.zip);
+    var first = String(f.goesby || f.name || '').split(' ')[0];
+
+    return {
+      f: f,
+
+      // which panel is on screen
+      showForm: !st.submitted,
+      submitted: st.submitted,
+      is1: !st.submitted && st.step === 1,
+      is2: !st.submitted && st.step === 2,
+      is3: !st.submitted && st.step === 3,
+      is4: !st.submitted && st.step === 4,
+
+      // step chips
+      c1: this.chipCls(1), c2: this.chipCls(2), c3: this.chipCls(3), c4: this.chipCls(4),
+      d1: st.step > 1, d2: st.step > 2, d3: st.step > 3,
+      go1: this.goto(1), go2: this.goto(2), go3: this.goto(3), go4: this.goto(4),
+      next: function () { self.next(); },
+      back: function () { self.back(); },
+      submit: function () { self.setState({ submitted: true }); },
+      reset: function () { self.setState({ submitted: false, step: 1, showErr: false }); },
+
+      // weekend picker
+      menOn: st.walk === 'men',
+      womenOn: st.walk === 'women',
+      menCls: st.walk === 'men' ? 'pick on' : 'pick',
+      womenCls: st.walk === 'women' ? 'pick on' : 'pick',
+      pickMen: function () { self.setState({ walk: 'men' }); },
+      pickWomen: function () { self.setState({ walk: 'women' }); },
+
+      // step 1 fields
+      setName: this.setField('name'),
+      setGoesby: this.setField('goesby'),
+      setDob: this.setField('dob'),
+      setEmail: this.setField('email'),
+      setPhone: this.setField('phone'),
+      setStreet: this.setField('street'),
+      setCity: this.setField('city'),
+      setState: this.setField('state'),
+      setZip: this.setField('zip'),
+      nameBad: nameBad, emailBad: emailBad, phoneBad: phoneBad,
+      nameCls: nameBad ? 'field span2 err' : 'field span2',
+      emailCls: emailBad ? 'field err' : 'field',
+      phoneCls: phoneBad ? 'field err' : 'field',
+
+      // step 2 fields
+      setChurch: this.setField('church'),
+      setChurchcity: this.setField('churchcity'),
+      setPastor: this.setField('pastor'),
+      setTenure: this.setField('tenure'),
+      setSponsor: this.setField('sponsor'),
+      setSponsorphone: this.setField('sponsorphone'),
+      setSponsoremail: this.setField('sponsoremail'),
+      setSponsorwalk: this.setField('sponsorwalk'),
+      needSponsor: st.needSponsor,
+      sponsorNeedCls: st.needSponsor ? 'check on' : 'check',
+      toggleSponsorNeed: this.flip('needSponsor'),
+
+      // step 3 fields
+      dVegCls: st.diet.veg ? 'tog on' : 'tog',
+      dVeganCls: st.diet.vegan ? 'tog on' : 'tog',
+      dGlutenCls: st.diet.gluten ? 'tog on' : 'tog',
+      dDairyCls: st.diet.dairy ? 'tog on' : 'tog',
+      dNutCls: st.diet.nut ? 'tog on' : 'tog',
+      dOtherCls: st.diet.other ? 'tog on' : 'tog',
+      dVeg: this.flipDiet('veg'),
+      dVegan: this.flipDiet('vegan'),
+      dGluten: this.flipDiet('gluten'),
+      dDairy: this.flipDiet('dairy'),
+      dNut: this.flipDiet('nut'),
+      dOther: this.flipDiet('other'),
+      setDietnote: this.setField('dietnote'),
+      setHealth: this.setField('health'),
+      setSleeping: this.setField('sleeping'),
+      setEcontact: this.setField('econtact'),
+      setErel: this.setField('erel'),
+      setEphone: this.setField('ephone'),
+      cpap: st.cpap,
+      cpapCls: st.cpap ? 'check on' : 'check',
+      toggleCpap: this.flip('cpap'),
+      scholarship: st.scholarship,
+      scholarCls: st.scholarship ? 'check on' : 'check',
+      toggleScholar: this.flip('scholarship'),
+
+      // step 4 review
+      agree: st.agree,
+      agreeCls: st.agree ? 'check on' : 'check',
+      toggleAgree: this.flip('agree'),
+      rWeekend: walkName + ' · [THU DATE – SUN DATE]',
+      rName: f.name || '—',
+      rNameAlt: f.goesby ? '— goes by ' + f.goesby : '',
+      rEmail: f.email || '—',
+      rPhone: f.phone || '—',
+      rHome: home || '—',
+      rChurch: [f.church, f.churchcity].filter(Boolean).join(', ') || '—',
+      rPastor: f.pastor || '—',
+      rSponsor: st.needSponsor ? 'To be matched by [COMMUNITY]' : (f.sponsor || '—'),
+      rSponsorAlt: st.needSponsor ? '— none yet' : (f.sponsorwalk === 'Yes' ? '— has made a Walk' : ''),
+      rSponsorContact: [f.sponsorphone, f.sponsoremail].filter(Boolean).join(' · ') || '—',
+      rDiet: this.dietLabel(),
+      rDietAlt: f.dietnote ? '— ' + f.dietnote : '',
+      rHealth: f.health || '',
+      rHealthAlt: f.health ? '' : 'None given',
+      rSleep: f.sleeping + (st.cpap ? ' · CPAP outlet needed' : ''),
+      rEmergName: f.econtact || '—',
+      rEmergRel: f.erel ? '— ' + String(f.erel).toLowerCase() : '',
+      rEmergPhone: f.ephone ? '· ' + f.ephone : '',
+      rSchol: st.scholarship ? 'Requested' : '',
+      rScholAlt: st.scholarship ? '' : 'Not requested',
+
+      // submitted
+      successLede: 'Thank you, ' + (first || 'friend') + '. Your form is with the registrar for the ' + walkName + ', [THU DATE – SUN DATE].',
+      successToday: 'A confirmation is on its way to ' + (f.email || 'your inbox') + '.' + (st.needSponsor ? ' [COMMUNITY] will call about a sponsor.' : ' Tell ' + String(f.sponsor || 'your sponsor').split(' ')[0] + ' you did it.')
+    };
+  }
+}
+</script>
+</body>
+</html>
